@@ -1,0 +1,18 @@
+Search for Jenny Lee on the internet. 
+
+If you need to use a tool, return only an json object with tool_calls as an attribute. 
+For example: 
+{
+  "tool_calls": [
+    {
+      "id": "id_value",
+      "function": {
+        "args": '{"arg_name": "arg_value"}',
+        "name": "tool_name"
+      },
+      "type": "function"
+    }
+  ]
+}
+
+Extract the JSON object from the preceding message. Return only the JSON object and nothing else. 
