@@ -3,3 +3,7 @@ cache/
 venv/
 bin/
 DS_store/
+lib
+lib64
+include
+ui/node_modules/
