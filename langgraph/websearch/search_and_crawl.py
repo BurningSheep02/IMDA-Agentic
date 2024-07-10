@@ -5,7 +5,7 @@ from Summariser import Summariser
 crawler = Crawler()
 searcher = Searcher()
 summariser = Summariser()
-TARGET_PERSON = "Lawrence Wong"
+TARGET_PERSON = "Leong Eu-Shaun"
 
 urls = searcher.search(TARGET_PERSON,"url")
 res = []

@@ -6,7 +6,7 @@ class Summariser(Agent):
 
     def summarise(self,textArr, subject=""):
         prompt = """
-        You are an expert whose task is to give a summary of texts on the same subject 
+        You are an expert whose task is to give a summary of texts pertaining to the following subject: """ + subject + """
         \n The texts are listed below:
         """ + "\n".join([f"{i}. {t}" for (i, t) in enumerate(textArr)])
         print(prompt)

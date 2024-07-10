@@ -33,17 +33,15 @@ class Searcher(Agent):
     
     def search(self,query,ret=""):
         output = super().send(query).replace("\'","\"")
-        #print(type(output))
-        #print(output)
         try:
             output = json.loads(output)
             print(output["arguments"])
-            print(type(output["arguments"]))
             match ret:
                 case "url":
-                    for x in self.web_search(output["arguments"]):
+                    res = self.web_search(output["arguments"])
+                    for x in res:
                         print(x)
-                    return [x["url"] for x in self.web_search(output["arguments"])]
+                    return [x["url"] for x in res]
                 case "":
                     return self.web_search(output["arguments"])
         except Exception as e:
