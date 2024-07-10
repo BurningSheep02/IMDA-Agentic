@@ -4,7 +4,7 @@ from Summariser import Summariser
 
 crawler = Crawler()
 summariser = Summariser()
-TARGET_PERSON = "Leong Eu-Shaun"
+TARGET_PERSON = "Mao Zedong"
 
 urls = search(TARGET_PERSON)
 res = []
