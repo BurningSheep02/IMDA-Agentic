@@ -17,35 +17,60 @@ def parse_html(html):
     md = js_lib.html_to_markdown(html)
     md = md.replace(r"\\n", "").replace(r"\\t","")
     md = re.sub(r'\n+', '\n', md)
+    print(md)
     return md
 
 class Crawler(Agent):
     def __init__(self,local_llm='elvee/hermes-2-pro-llama-3:8b-Q5_K_M',temperature=0.0):  
         super().__init__(self, local_llm=local_llm, temperature=temperature)
 
-    def crawl(self,url,context="") -> str:
+    def stage(self, url, context="") -> str:
         try:
             html = str(open_url(url))
-            print(f"----\nOpening {url} ----\n")
+            print(f"---- Opening {url} ----\n")
         except Exception as e:
             print(f"Failed to open url {url} for the following reason:\n{e}")
             return ""
         
         self.system_prompt = """
-        You are an expert whose job is to identify and parse the main content of a webpage.
+        You are an expert whose job is to identify and isolate the meaningful content in the text-dump of a website.
         Ignore all sources, stylesheets, pictures, and JSON notation. 
-        Also ignore all auxiliary functions of the website such as headers, footers, links, settings and terms of use.
-        Return only the relevant content.""" 
+        Also ignore all auxiliary functions of the website such as headers, footers, links, navigation menus and terms of use.\n""" 
 
         if context != "":
-            self.system_prompt += "about" + context
+            self.system_prompt += f"Summarise and return only the content relevant to {context}."
+
         try:
-            output = super().send(parse_html(html))
-            print(f"Finished crawling url {url}\n\nOutput:\n\n{output}\n----")
+            print(f"---- Parsing markdown ----\n")
+            md = parse_html(html)
+            print(f"---- Markdown finished parsing ----\n")
+        except Exception as e:
+            print(f"Error occured parsing markdown for url {url}\n----\n{e}\n")
+            return ""
+        
+        return md
+
+
+    def crawlSync(self, url, context="") -> str:
+        md = self.stage(url, context)
+        try:
+            print(f"---- Crawling url {url} synchronously ----\n")
+            output = super().sendSync(md)
+            print(f"---- Finished crawling url {url} ----\n Output:\n\n{output}\n----------------------\n")
             return output
         except Exception as e:
-            print(f"Error occured crawling url {url}\n----")
-            print(e)
+            print(f"Error occured crawling url {url}\n----\n{e}\n")
+            return ""
+        
+    async def crawl(self, url, context="") -> str:
+        md = self.stage(url, context)
+        try:
+            print(f"---- Crawling url {url} asynchronously ----\n")
+            output = await super().send(md, printout=True)
+            print(f"---- Finished crawling url {url} ----\n Output:\n\n{output}\n----------------------\n")
+            return output
+        except Exception as e:
+            print(f"Error occured crawling url {url}\n----\n{e}\n")
             return ""
 
 #crawler = Crawler()

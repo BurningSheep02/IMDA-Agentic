@@ -10,5 +10,6 @@ class Summariser(Agent):
         """
         if subject != "":
             self.system_prompt += "Only include content relevant to " + subject + ". Ignore all content not relevant to " + subject
-        return super().send("\n".join([f"{i}. {t}" for (i, t) in enumerate(textArr)]))
+        return super().send("\n".join([f"{i}. {t}" for (i, t) in enumerate(textArr)]), printout=True)
+    
     
