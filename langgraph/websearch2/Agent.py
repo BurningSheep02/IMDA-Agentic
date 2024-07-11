@@ -7,7 +7,7 @@ class Agent:
         self.system_prompt = system_prompt
         self.log = {"inputs":[],"outputs":[]}
 
-    def send(self, input="") -> str:
+    def send(self, input="", printout=False) -> str:
         prompt = ChatPromptTemplate.from_messages(
         [("system", self.system_prompt), ("user", "{input}")]
         )
@@ -19,15 +19,4 @@ class Agent:
         self.log["outputs"].append(output.content)
 
         return output.content
-    
-
-
-
-
-
-
-
-
-
-    
     

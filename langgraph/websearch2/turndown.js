@@ -7,6 +7,6 @@ function html_to_markdown(html) {
 
 module.exports = {
     html_to_markdown
-  }
+}
 
 

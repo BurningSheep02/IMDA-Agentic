@@ -5,8 +5,9 @@ from pythonmonkey import require as js_require
 import re
 
 def open_url(url):
-    headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
-                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'}
+    headers = {'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:127.0) Gecko/20100101 Firefox/127.0',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                }
     req = Request(url, headers=headers) 
     html = urlopen(req).read()
     return html
@@ -25,20 +26,22 @@ class Crawler(Agent):
     def crawl(self,url,context="") -> str:
         try:
             html = str(open_url(url))
-            print(f"----\nOpening {url}\n")
+            print(f"----\nOpening {url} ----\n")
         except Exception as e:
             print(f"Failed to open url {url} for the following reason:\n{e}")
             return ""
         
         self.system_prompt = """
-        You are an expert whose job is to parse text files extracted from a website.
-        Ignore all sources, style tags, pictures, and JSON notation. Return only on the relevant content""" 
+        You are an expert whose job is to identify and parse the main content of a webpage.
+        Ignore all sources, stylesheets, pictures, and JSON notation. 
+        Also ignore all auxiliary functions of the website such as headers, footers, links, settings and terms of use.
+        Return only the relevant content.""" 
 
         if context != "":
             self.system_prompt += "about" + context
         try:
             output = super().send(parse_html(html))
-            print(f"Finished crawling url {url}\n----")
+            print(f"Finished crawling url {url}\n\nOutput:\n\n{output}\n----")
             return output
         except Exception as e:
             print(f"Error occured crawling url {url}\n----")

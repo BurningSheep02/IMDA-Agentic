@@ -11,5 +11,6 @@ res = []
 for url in urls:
     res.append(crawler.crawl(url,context=TARGET_PERSON))
 summary = summariser.summarise(res,TARGET_PERSON)
+
 print("""\n\nResult:\n\n""")
 print(summary)
