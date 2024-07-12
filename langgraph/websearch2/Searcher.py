@@ -23,8 +23,7 @@ def search(query,urls=3):
     return [res["link"] for res in data["organic"][0:urls]]
     
 
-#searcher = Searcher()
-print(search("Leong Eu-Shaun"))
+
 
 
 

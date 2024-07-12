@@ -39,6 +39,7 @@ class Crawler(Agent):
         try:
             output = super().send(parse_html(html))
             print(f"Finished crawling url {url}\n----")
+            print(output)
             return output
         except Exception as e:
             print(f"Error occured crawling url {url}\n----")

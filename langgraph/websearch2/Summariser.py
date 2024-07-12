@@ -9,6 +9,6 @@ class Summariser(Agent):
         You are an expert whose task is to give a summary of texts.
         """
         if subject != "":
-            self.system_prompt += "Only include content relevant to " + subject + ". Ignore all content not relevant to " + subject
+            self.system_prompt += "Only include content relevant to " + subject 
         return super().send("\n".join([f"{i}. {t}" for (i, t) in enumerate(textArr)]))
     
