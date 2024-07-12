@@ -6,4 +6,6 @@ DS_store/
 lib
 lib64
 include
+node_modules
 ui/node_modules/
+.env
