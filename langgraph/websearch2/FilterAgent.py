@@ -9,7 +9,7 @@ class FilterAgent(Agent):
         You are an expert whose job is to identify whether a piece of text is relevant to a stated topic.
         Return "Yes" if you believe that the text is relevant, and "No" otherwise.
 
-        The stated topic is {context}
+        The stated topic is {context}.
 
         The given piece of text follows:
         """

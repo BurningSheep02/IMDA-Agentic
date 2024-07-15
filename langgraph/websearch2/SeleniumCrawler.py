@@ -20,6 +20,7 @@ class SeleniumCrawler(Agent):
         print(f"-----------\nText extracted from webpage:\n{res}\n-----------\n")
         return res
 
+
     
     def _stage(self, context):
         self.system_prompt = """
@@ -41,6 +42,8 @@ class SeleniumCrawler(Agent):
         except Exception as e:
             print(f"Error occured crawling url {url}\n----\n{e}\n")
             return ""
+        
+
         
     async def crawl(self, url, context="") -> str:
         text = self._read_webpage(url)
