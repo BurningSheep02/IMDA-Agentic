@@ -1,1 +1,2 @@
 https://github.com/amscotti/local-LLM-with-RAG/tree/main
+https://python.langchain.com/v0.2/docs/tutorials/local_rag/ 
