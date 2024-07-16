@@ -15,7 +15,7 @@ from langchain_community.document_loaders import DirectoryLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_chroma import Chroma
 
-loader = DirectoryLoader("/Users/shaoyang/Desktop/Agent/langgraph/rag/penal code", glob="**/*.txt",show_progress=True)
+loader = DirectoryLoader("/Users/shaoyang/Desktop/Agent/langgraph/rag/texts", glob="**/*.txt",show_progress=True)
 data = loader.load()
 
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=0)
@@ -29,10 +29,10 @@ chromadb = Chroma.from_documents(
     embedding=embeddings,
 )
 
-question = input("What do you want to search within the penal code?")
-docs = chromadb.similarity_search(question,k=10)
+question = "Lawrence Wong university education"
+docs = chromadb.similarity_search(question,k=3)
 relevant_texts = [document.page_content for document in docs]
-print(relevant_texts)
+#print(relevant_texts)
 
 from Summariser import Summariser
 legal_agent = Summariser()
