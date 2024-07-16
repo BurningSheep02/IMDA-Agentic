@@ -12,9 +12,8 @@ def open_url(url):
     html = urlopen(req).read()
     return html
 
-js_lib = js_require('./turndown.js')
 def parse_html(html):
-    md = js_lib.html_to_markdown(html)
+    md = ""
     md = md.replace(r"\\n", "").replace(r"\\t","")
     md = re.sub(r'\n+', '\n', md)
     print(md)
