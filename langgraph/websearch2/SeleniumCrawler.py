@@ -7,7 +7,7 @@ import re
 class SeleniumCrawler(Agent):
     def __init__(self, local_llm='elvee/hermes-2-pro-llama-3:8b-Q5_K_M', temperature=0.0):  
         super().__init__(self, local_llm=local_llm, temperature=temperature)
-        self.driver = webdriver.Firefox(service=FirefoxService("/snap/bin/firefox.geckodriver"))
+        self.driver = webdriver.Safari()
 
     def _read_webpage(self, url):
         self.driver.get(url)

@@ -13,7 +13,7 @@ async def main():
     crawler = SeleniumCrawler()
     summariser = Summariser()
     chroma = ChromaClient()
-    TARGET_PERSON = "Lee Kuan Yew"
+    TARGET_PERSON = "Zara Khanna"
 
     urls = search(TARGET_PERSON)
     res = []
