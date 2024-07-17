@@ -1,13 +1,14 @@
 from chroma.ChromaClient import ChromaClient
 from langchain_chroma import Chroma
+from langchain.schema.document import Document
 import os
 
 class ChromaTemp(ChromaClient):
     def __init__(self, docs):
-        super(ChromaClient, self).__init__(1000, 100)
+        super().__init__(1000, 100)
 
         # Temporary vectorstore
-        doc_chunks = self.split_docs(docs)
+        doc_chunks = self.split_docs([Document(page_content=doc) for doc in docs])
         self.vectorstore : Chroma = Chroma.from_documents(documents=doc_chunks, embedding=self.model)
 
     def similarity_search(self, query, k=5):

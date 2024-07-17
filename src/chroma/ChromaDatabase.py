@@ -5,7 +5,7 @@ import os
 
 class ChromaDatabase(ChromaClient):
     def __init__(self):
-        super(ChromaClient, self).__init__()
+        super().__init__()
 
         # Persistent vectorstore
         DB_DIR = f"{os.getcwd()}/chroma_db"
