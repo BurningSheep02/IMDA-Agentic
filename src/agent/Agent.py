@@ -33,7 +33,6 @@ class Agent:
         if printout:
             try:
                 async for event in output_chain.astream_events(input={"input": input}, version="v2", include_types=["chat_model"]):
-                    print(event)
                     if event["event"] == "on_chat_model_stream":
                         print(event['data']['chunk'].content, end="", flush=True)
                     if event["event"] == "on_chat_model_end":
