@@ -12,8 +12,8 @@ def search(query,urls=3):
         "gl": "sg"
     })
     headers = {
-    'X-API-KEY': os.environ['SERPER_DEV_API_KEY'],
-    'Content-Type': 'application/json'
+        'X-API-KEY': os.environ['SERPER_DEV_API_KEY'],
+        'Content-Type': 'application/json'
     }
     conn.request("POST", "/search", payload, headers)
     res = conn.getresponse()
