@@ -11,6 +11,7 @@ class SeleniumCrawler(Agent):
             self.driver = webdriver.Safari()
         except:
             self.driver = webdriver.Firefox(service=FirefoxService("/snap/bin/firefox.geckodriver"))
+        self.text = ""
 
     def _read_webpage(self, url):
         try:
@@ -23,9 +24,10 @@ class SeleniumCrawler(Agent):
         p_elements = self.driver.find_elements(by=By.TAG_NAME, value="p")
         for p_element in p_elements:
             parr.append(p_element.text)
-        res = " ".join(parr)
-        print(f"-----------\nText extracted from webpage:\n{res}\n-----------\n")
-        return res
+        self.text = " ".join(parr)
+
+        print(f"-----------\nText extracted from webpage:\n{self.text}\n-----------\n")
+        return self
     
     def _stage(self, context):
         self.system_prompt = """
@@ -33,27 +35,38 @@ class SeleniumCrawler(Agent):
         You should remove all sources, stylesheets, pictures, and JSON notation, as well as text pertaining to the website's auxiliary functions such as headers, footers, links, navigation menus and terms of use.\n""" 
         if context != "":
             self.system_prompt += f"You should also remove all content irrelevant to {context}."
+        return self
+
+    def clean(self):
+        s = re.sub(r'\[(.*?)\]', '', self.text)
+        s = re.sub(r"\s{2,}", "", s)
+        self.text = s
+        return self
+
+    def crawl(self, url) -> str:
+        print(f"---- Crawling {url} ----\n")
+        self._read_webpage(url).clean()
+        print(f"---- Finished {url} ----\n")
+        return self.text
     
-    def crawlSync(self, url, context="") -> str:
-        text = self._read_webpage(url)
-        self._stage(context)
+    def crawlAndSummariseSync(self, url, context="") -> str:
+        self._read_webpage(url).clean()._stage(context)
         try:
-            print(f"---- Crawling url {url} synchronously ----\n")
-            output = super().sendSync(text)
-            print(f"---- Finished crawling url {url} ----\n")
+            print(f"---- Crawling and summarising {url} synchronously ----\n")
+            output = super().sendSync(self.text)
+            print(f"---- Finished {url} ----\n")
             return output
         except Exception as e:
-            print(f"Error occured crawling url {url}\n----\n{e}\n")
+            print(f"Error occured crawling and summarising url {url}\n----\n{e}\n")
             return ""
         
-    async def crawl(self, url, context="") -> str:
-        text = self._read_webpage(url)
-        self._stage(context)
+    async def crawlAndSummarise(self, url, context="") -> str:
+        self._read_webpage(url).clean()._stage(context)
         try:
-            print(f"---- Crawling url {url} asynchronously ----\n")
-            output = await super().send(text, printout=True)
-            print(f"---- Finished crawling url {url} ----\n")
+            print(f"---- Crawling and summarising {url} asynchronously ----\n")
+            output = await super().send(self.text, printout=True)
+            print(f"---- Finished {url} ----\n")
             return output
         except Exception as e:
-            print(f"Error occured crawling url {url}\n----\n{e}\n")
+            print(f"Error occured crawling and summarising url {url}\n----\n{e}\n")
             return ""

@@ -8,11 +8,10 @@ class ChromaTemp(ChromaClient):
         super().__init__(1000, 100)
 
         # Temporary vectorstore
-        doc_chunks = self.split_docs([Document(page_content=doc,metadata={"source": "local"}) for doc in docs])
+        doc_chunks = self.split_docs([Document(page_content=doc, metadata={"source": "local"}) for doc in docs])
         self.vectorstore : Chroma = Chroma.from_documents(documents=doc_chunks, embedding=self.model)
 
     def similarity_search(self, query, k=5):
         res = self.vectorstore.similarity_search(query=query, k=k)
         print("Similarity search finished on temporary vectorstore\n")
         return res
-        
