@@ -4,10 +4,11 @@ import os
 
 class ChromaTemp(ChromaClient):
     def __init__(self, docs):
-        super().__init__(self, 1000, 100)
+        super(ChromaClient, self).__init__(1000, 100)
 
         # Temporary vectorstore
-        self.vectorstore : Chroma = Chroma.from_documents(documents=docs, embedding=self.model)
+        doc_chunks = self.split_docs(docs)
+        self.vectorstore : Chroma = Chroma.from_documents(documents=doc_chunks, embedding=self.model)
 
     def similarity_search(self, query, k=5):
         res = self.vectorstore.similarity_search(query=query, k=k)

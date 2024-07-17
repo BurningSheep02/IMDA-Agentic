@@ -15,7 +15,7 @@ async def main():
     QUERY_TARGET = "Zara Khanna"
 
     # External search online
-    urls = search(QUERY_TARGET)
+    urls = search(QUERY_TARGET, 1)
     webpages = []
     for url in urls:
         webpages.append(await crawler.crawl(url, context=QUERY_TARGET))
