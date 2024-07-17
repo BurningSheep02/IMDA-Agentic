@@ -1,21 +1,23 @@
 
-from chroma.ChromaEmbeddingClient import ChromaEmbeddingClient
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+from chroma.EmbedModel import EmbedModel
+from typing import List
 
 class ChromaClient():
 
-    def __init__(self, docs, chunk_size=500, chunk_overlap=0):
+    def __init__(self, chunk_size=500, chunk_overlap=0):
 
         # Text splitter
-        self.text_splitter = RecursiveCharacterTextSplitter(chunk_size, chunk_overlap)
-        self.split_docs = self.text_splitter.split_documents(docs)
+        self.text_splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
 
-        # Embeddings
-        EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
-        self.model = ChromaEmbeddingClient(EMBEDDING_MODEL)
+        # Embedding Model
+        self.model = EmbedModel()
 
     def insert(self, doc):
         pass
 
     def delete(self, doc):
         pass
+
+    def split_docs(self, docs):
+        return self.text_splitter.split_documents(docs)

@@ -1,10 +1,12 @@
-from langchain_community.embeddings import GPT4AllEmbeddings
-from typing import List
-from sentence_transformers import SentenceTransformer
 
-class ChromaEmbeddingClient():
-    def __init__(self, model):
-        self.model = SentenceTransformer(model, trust_remote_code=True)
+from sentence_transformers import SentenceTransformer
+from typing import List
+
+class EmbedModel():
+    def __init__(self):
+        # Embeddings
+        EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
+        self.model = SentenceTransformer(EMBEDDING_MODEL, trust_remote_code=True)
 
     def embed_documents(self, texts: List[str]) -> List[List[float]]:
         return [self.model.encode(t).tolist() for t in texts]
