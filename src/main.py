@@ -19,7 +19,7 @@ async def main():
     webpages = []
     for url in urls:
         webpages.append(await crawler.crawl(url, context=QUERY_TARGET))
-    web_res = ChromaTemp(webpages, QUERY_TARGET, k=20)
+    web_res = ChromaTemp(webpages).similarity_search(QUERY_TARGET, k=20)
 
     # Internal search in database
     chroma_db = ChromaDatabase()
