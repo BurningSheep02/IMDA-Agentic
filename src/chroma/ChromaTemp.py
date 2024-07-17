@@ -12,6 +12,7 @@ class ChromaTemp(ChromaClient):
         self.vectorstore : Chroma = Chroma.from_documents(documents=doc_chunks, embedding=self.model)
 
     def similarity_search(self, query, k=5):
+        print("---- Starting similarity search on temporary database ----\n")
         res = self.vectorstore.similarity_search(query=query, k=k)
-        print("Similarity search finished on temporary vectorstore\n")
+        print("---- Similarity search finished on temporary vectorstore ----\n")
         return res

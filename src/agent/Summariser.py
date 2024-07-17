@@ -7,13 +7,12 @@ class Summariser(Agent):
 
     def summarise(self, docArr, subject=""):
         textArr = [x.page_content for x in docArr]
+        # print(textArr)
 
-        self.system_prompt = """
-        You are an expert whose task is to give a summary of texts.
-        """
-
+        self.system_prompt = """You are an expert whose task is to summarise a list of related texts.\n"""
         if subject != "":
-            self.system_prompt += "Only include content relevant to " + subject + ". Ignore all content not relevant to " + subject
+            self.system_prompt += f"Only include content relevant to {subject}. Ignore all text not relevant to {subject}.\n"
+        self.system_prompt += "The list of text follows:\n\n"
         return super().send("\n".join([f"{i}. {t}" for (i, t) in enumerate(textArr)]), printout=True)
     
     

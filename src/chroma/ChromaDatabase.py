@@ -17,8 +17,9 @@ class ChromaDatabase(ChromaClient):
             self.vectorstore : Chroma = Chroma.from_documents(documents=doc_chunks, embedding=self.model, persist_directory=DB_DIR)
 
     def similarity_search(self, qn, k):
+        print("---- Starting similarity search on Chroma database ----\n")
         res = self.vectorstore.similarity_search(query=qn, k=k)
-        print("Similarity search finished on Chroma database\n")
+        print("---- Similarity search finished on Chroma database ----\n")
         return res
     
     def insert(self, document):

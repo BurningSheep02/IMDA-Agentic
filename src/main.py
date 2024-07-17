@@ -15,17 +15,17 @@ async def main():
     QUERY_TARGET = "Terence Tao"
 
     # External search online
-    urls = search(QUERY_TARGET, 1)
+    urls = search(QUERY_TARGET, 5)
     webpages = []
     for url in urls:
-        webpages.append(crawler.crawl(url))
+        webpages.append(await crawler.crawlAndSummarise(url))
     web_res = ChromaTemp(webpages).similarity_search(QUERY_TARGET, k=20)
-    print(web_res)
+    # print(web_res)
 
     # Internal search in database
     chroma_db = ChromaDatabase()
     db_res = chroma_db.similarity_search(QUERY_TARGET, k=3)
-    print(db_res)
+    # print(db_res)
 
     # Put everything together and summarise
     res = web_res + db_res
