@@ -10,4 +10,7 @@ class FileReader():
             self.loader = DirectoryLoader(fpath, glob="**/*.txt")
         else:
             self.loader = DirectoryLoader(f"{os.getcwd()}/files/", glob="**/*.txt")
-        return self.loader.load()
+        self.doc_chunks = self.loader.load()
+        
+    def get_chunks(self):
+        return self.doc_chunks

@@ -12,7 +12,7 @@ class ChromaDatabase(ChromaClient):
         if (os.path.exists(DB_DIR)):
             self.vectorstore : Chroma = Chroma(embedding_function=self.model, persist_directory=DB_DIR)
         else:
-            docs = FileReader()
+            docs = FileReader().get_chunks()
             doc_chunks = self.split_docs(docs)
             self.vectorstore : Chroma = Chroma.from_documents(documents=doc_chunks, embedding=self.model, persist_directory=DB_DIR)
 

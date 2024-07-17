@@ -8,7 +8,7 @@ class ChromaClient():
     def __init__(self, chunk_size=500, chunk_overlap=0):
 
         # Text splitter
-        self.text_splitter = RecursiveCharacterTextSplitter(chunk_size, chunk_overlap)
+        self.text_splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
         # Embeddings
         EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
         self.model = SentenceTransformer(EMBEDDING_MODEL, trust_remote_code=True)
@@ -20,7 +20,7 @@ class ChromaClient():
         pass
 
     def split_docs(self, docs):
-        self.doc_chunks = self.text_splitter.split_documents(docs)
+        return self.text_splitter.split_documents(docs)
 
     def embed_documents(self, texts: List[str]) -> List[List[float]]:
         return [self.model.encode(t).tolist() for t in texts]
