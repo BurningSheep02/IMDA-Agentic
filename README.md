@@ -1,3 +1,2 @@
 # IMDA-Agentic
 
-Burning sheep
