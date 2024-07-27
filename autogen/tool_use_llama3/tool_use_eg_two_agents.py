@@ -1,9 +1,8 @@
-import autogen
 from autogen import ConversableAgent
-
 import http.client
 import json
 import os
+
 
 def web_search(query: str) -> str:
     conn = http.client.HTTPSConnection("google.serper.dev")
