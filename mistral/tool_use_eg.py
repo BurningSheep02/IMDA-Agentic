@@ -2,8 +2,6 @@ import autogen
 from typing import Literal
 from typing_extensions import Annotated
 
-# Run litellm --model ollama_chat/[model_name] to start local server
-
 local_llm_config={
     "config_list": [
         {

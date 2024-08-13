@@ -13,7 +13,7 @@ async def main():
     summariser = Summariser()
     newser = GuardianNewsAgent()
     #chroma = ChromaClient()
-    TARGET_PERSON = "S Iswaran Singapore"
+    TARGET_PERSON = "Lee Hsien Loong"
 
     urls = search(TARGET_PERSON,urls=1)
     res = []

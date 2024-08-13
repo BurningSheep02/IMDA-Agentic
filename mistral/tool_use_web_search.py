@@ -2,7 +2,7 @@ from autogen import ConversableAgent
 import http.client
 import json
 import os
-from web_search import google_search
+from web_search import search_and_crawl
 
 local_llm_config={
     "config_list": [
@@ -29,8 +29,8 @@ manager_agent = ConversableAgent(
 )
 
 # Register the function with the agent
-manager_agent.register_for_llm(name="google_search", description="A web searcher")(google_search)
-assistant_agent.register_for_execution(name="google_search")(google_search)
+manager_agent.register_for_llm(name="search_and_crawl", description="A web searcher")(search_and_crawl)
+assistant_agent.register_for_execution(name="search_and_crawl")(search_and_crawl)
 
 # start the conversation
 chat_result = manager_agent.initiate_chat(
