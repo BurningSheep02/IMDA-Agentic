@@ -6,6 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 from typing_extensions import Annotated
 
+# Helper functions
 def not_blacklisted(blacklist):
     def link_not_blacklisted(link):
         is_not_in_blacklist = [word not in link for word in blacklist]
@@ -36,10 +37,13 @@ def read_webpage(url, driver):
         res = " ".join(parr)
         return res
 
+
+
+# Tool that searches a query on Google and extracts content in the top 3 sites. 
 def search_and_crawl(
     query: Annotated[str, 'query to search for'],
     blacklist=['google','youtu'], 
-    n=3):
+    n: Annotated[int, 'number of sites to crawl']=3):
     driver = webdriver.Firefox()
     urls = google_search(query, driver, blacklist, n)
     
@@ -51,4 +55,4 @@ def search_and_crawl(
     #for url, extract in zip(urls,extracts):
         #print(f"Extracted from ${url}:")
         #print(extract + "\n")
-    return "#" + "\n".join(extracts)    
+    return "Search results: " + "\n".join(extracts)    
