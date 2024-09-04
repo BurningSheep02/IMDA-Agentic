@@ -23,7 +23,7 @@ speakers = ["Dario Amodei",
             "Hu Heng Hua"]
 
 event = "ATx Summit Plenary"
-task = "Generate speaker profiles for "
+task = "Generate speaker profiles for " + ", ".join(speakers)
 
 
 config_list = [
@@ -44,7 +44,8 @@ user_proxy = UserProxyAgent(
 
 planner = AssistantAgent(
     name="Planner",
-    system_message=f"""Planner. Given a task, please determine what information is needed to {task}. """,
+    system_message=f"""Planner. Please determine what information is needed to {task}. 
+                    If multiple speakers are """,
     llm_config={"config_list": config_list, "cache_seed": None},
 )
 
@@ -91,7 +92,7 @@ def custom_speaker_selection_func(last_speaker: Agent, groupchat: GroupChat):
     """
     messages = groupchat.messages
 
-    ordering = [planner,
+    ordering = [
                 internal_searcher,
                 user_proxy,
                 writer,
@@ -143,3 +144,7 @@ with Cache.disk(cache_seed=41) as cache:
         message=task,
         cache=cache,
     )
+
+"""Run 
+`chroma run --path ./chroma_db` 
+on command line to activate internal search"""
